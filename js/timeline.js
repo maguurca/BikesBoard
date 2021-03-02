@@ -56,9 +56,9 @@ class Timeline {
 	wrangleData() {
 		const vis = this
 
-    vis.coin = $("#coin-select").val()
+    vis.season = $("#season-select").val()
     vis.yValue = $("#var-select").val()
-    vis.data = filteredData[vis.coin]
+    vis.data = filteredData[vis.season]
 
 		vis.updateVis()
 	}

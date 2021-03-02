@@ -42,7 +42,7 @@ class DonutChart {
       .attr("x", -(vis.WIDTH / 2))
       .attr("font-size", "15px")
       .attr("text-anchor", "start")
-      .text(vis.variable == "market_cap" ? "Sensación térmica" 
+      .text(vis.variable == "temperature" ? "Sensación térmica" 
         : "Temperatura promedio")
 
 		vis.wrangleData()
@@ -51,7 +51,7 @@ class DonutChart {
 	wrangleData() {
 		const vis = this
 
-    vis.activeCoin = $("#coin-select").val()
+    vis.activeseason = $("#season-select").val()
 
 		vis.updateVis()
 	}
@@ -77,19 +77,19 @@ class DonutChart {
     // UPDATE elements still on the screen.
     vis.path.transition(vis.t)
       .attrTween("d", arcTween)
-      .attr("fill-opacity", (d) => (d.data.coin === vis.activeCoin) ? 1 : 0.3)
+      .attr("fill-opacity", (d) => (d.data.season === vis.activeseason) ? 1 : 0.3)
   
     // ENTER new elements in the array.
     vis.path.enter().append("path")
       .each(function(d, i) { this._current = findNeighborArc(i, vis.data0, vis.data1, key) || d }) 
-      .attr("fill", d => color(d.data.coin))
-      .attr("fill-opacity", (d) => (d.data.coin === vis.activeCoin) ? 1 : 0.3)
+      .attr("fill", d => color(d.data.season))
+      .attr("fill-opacity", (d) => (d.data.season === vis.activeseason) ? 1 : 0.3)
       .on("click", arcClicked)
       .transition(vis.t)
         .attrTween("d", arcTween)
   
     function key(d) {
-      return d.data.coin
+      return d.data.season
     }
   
     function findNeighborArc(i, data0, data1, key) {

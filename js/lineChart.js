@@ -58,7 +58,7 @@ class LineChart {
 			.ticks(5)
 		vis.yAxisCall = d3.axisLeft()
 			.ticks(6)
-			.tickFormat(d => `${parseInt(d / 1000)}k`)
+			//.tickFormat(d => `${parseInt(d / 1000)}k`)
 		
 		// axis groups
 		vis.xAxis = vis.g.append("g")
@@ -75,10 +75,10 @@ class LineChart {
 		const vis = this
 
 		// filter data based on selections
-		vis.coin = $("#coin-select").val()
+		vis.season = $("#season-select").val()
 		vis.yValue = $("#var-select").val()
 		vis.sliderValues = $("#date-slider").slider("values")
-		vis.dataTimeFiltered = filteredData[vis.coin].filter(d => {
+		vis.dataTimeFiltered = filteredData[vis.season].filter(d => {
 			return ((d.date >= vis.sliderValues[0]) && (d.date <= vis.sliderValues[1]))
 		})
 
@@ -171,13 +171,13 @@ class LineChart {
 	
 		// Update our line path
 		vis.g.select(".line")
-			.attr("stroke", color(vis.coin))
+			.attr("stroke", color(vis.season))
 			.transition(vis.t)
 			.attr("d", vis.line(vis.dataTimeFiltered))
 	
 		// Update y-axis label
-		const newText = (vis.yValue === "price_usd") ? "Total de préstamos" 
-			: (vis.yValue === "market_cap") ? "Temperatura promedio" 
+		const newText = (vis.yValue === "count") ? "Total de préstamos" 
+			: (vis.yValue === "temperature") ? "Temperatura promedio" 
 				: "Sensación térmica"
 		vis.yLabel.text(newText)
 	}
